@@ -938,6 +938,24 @@
             }
         }
 
+        window.addEventListener('DOMContentLoaded', () => {
+        const savedEmail = localStorage.getItem('adminEmail');
+        const isAdmin = localStorage.getItem('isAdmin');
+
+        if (savedEmail === 'jlibiblecollege@gmail.com' && isAdmin === 'true') {
+            console.log("Admin session detected from Main Hub. Logging in...");
+            
+            // 1. Set the email identity for the September batch
+            window.studentEmail = savedEmail;
+            window.studentName = "Bible College Admin";
+
+            // 2. Automatically open the admin panel
+            if (typeof window.showAdminDashboard === 'function') {
+                window.showAdminDashboard();
+            }
+        }
+    });
+
     </script>
 </body>
 </html>
