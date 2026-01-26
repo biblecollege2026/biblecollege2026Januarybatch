@@ -938,20 +938,6 @@
             }
         }
 
-window.addEventListener('DOMContentLoaded', () => {
-        const savedEmail = localStorage.getItem('adminEmail');
-        const isAdmin = localStorage.getItem('isAdmin');
-
-        if (savedEmail === 'jlibiblecollege@gmail.com' && isAdmin === 'true') {
-            console.log("Admin session detected. Opening January Batch...");
-            
-            window.studentEmail = savedEmail; 
-            
-            if (typeof showAdminDashboard === "function") {
-                showAdminDashboard();
-            }
-        }
-    });
     </script>
 </body>
 </html>
