@@ -939,21 +939,37 @@
         }
 
         <script>
-    // Receiver Script for January Batch
-    window.addEventListener('DOMContentLoaded', () => {
-        const savedEmail = localStorage.getItem('adminEmail');
-        const isAdmin = localStorage.getItem('isAdmin');
+   (function() {
+        function attemptAutoLogin() {
+            const savedEmail = localStorage.getItem('adminEmail');
+            const isAdmin = localStorage.getItem('isAdmin');
 
-        if (savedEmail === 'jlibiblecollege@gmail.com' && isAdmin === 'true') {
-            window.studentEmail = savedEmail; 
-            window.studentName = "Bible College Admin";
-            
-            // This opens the dashboard automatically when you arrive
-            if (typeof showAdminDashboard === "function") {
-                showAdminDashboard();
+            if (savedEmail === 'jlibiblecollege@gmail.com' && isAdmin === 'true') {
+                console.log("Admin session found! Bypassing login for January Batch...");
+                
+                // 1. Force the identity
+                window.studentEmail = savedEmail;
+                window.studentName = "Bible College Admin";
+
+                // 2. Open the dashboard (trying three common function names just in case)
+                if (typeof showAdminDashboard === "function") {
+                    showAdminDashboard();
+                } else if (typeof window.showAdminDashboard === "function") {
+                    window.showAdminDashboard();
+                } else {
+                    // Fallback: Manually show the elements if the function isn't ready
+                    const adminSec = document.getElementById('admin-security-section');
+                    const adminStud = document.getElementById('admin-students-toggle-div');
+                    if(adminSec) adminSec.style.display = 'block';
+                    if(adminStud) adminStud.style.display = 'block';
+                }
             }
         }
-    });
+
+        // Run immediately and again after 500ms to be sure
+        attemptAutoLogin();
+        setTimeout(attemptAutoLogin, 500);
+    })();
 </script>
     </script>
 </body>
