@@ -938,23 +938,33 @@
             }
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-        const savedEmail = localStorage.getItem('adminEmail');
-        const isAdmin = localStorage.getItem('isAdmin');
+     // --- AUTO-LOGIN BRIDGE FOR ADMIN ---
+window.addEventListener('DOMContentLoaded', () => {
+    // 1. Check if we arrived with an auth token in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const authEmail = urlParams.get('auth');
+    
+    // 2. Check if we have a saved admin session in this browser
+    const savedAdminEmail = localStorage.getItem('adminEmail');
+    const isAdmin = localStorage.getItem('isAdmin');
 
-        if (savedEmail === 'jlibiblecollege@gmail.com' && isAdmin === 'true') {
-            console.log("Admin session detected from Main Hub. Logging in...");
+    // If either the URL says it's you, or the Browser memory says it's you...
+    if (authEmail === 'jlibiblecollege@gmail.com' || (savedAdminEmail === 'jlibiblecollege@gmail.com' && isAdmin === 'true')) {
+        
+        console.log("Admin detected! Bypassing login gate...");
+        
+        // Fill the input and trigger the login function automatically
+        const emailInput = document.getElementById('studentEmail');
+        if (emailInput) {
+            emailInput.value = 'jlibiblecollege@gmail.com';
             
-            // 1. Set the email identity for the September batch
-            window.studentEmail = savedEmail;
-            window.studentName = "Bible College Admin";
-
-            // 2. Automatically open the admin panel
-            if (typeof window.showAdminDashboard === 'function') {
-                window.showAdminDashboard();
-            }
+            // Wait a split second for the rest of the page to be ready, then click login
+            setTimeout(() => {
+                verifyAccess(); 
+            }, 100);
         }
-    });
+    }
+});
 
     </script>
 </body>
