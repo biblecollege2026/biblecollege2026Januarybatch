@@ -937,6 +937,24 @@
                 printBtn.textContent = '🖨️ Print This Chapter';
             }
         }
+
+        <script>
+    // Receiver Script for January Batch
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedEmail = localStorage.getItem('adminEmail');
+        const isAdmin = localStorage.getItem('isAdmin');
+
+        if (savedEmail === 'jlibiblecollege@gmail.com' && isAdmin === 'true') {
+            window.studentEmail = savedEmail; 
+            window.studentName = "Bible College Admin";
+            
+            // This opens the dashboard automatically when you arrive
+            if (typeof showAdminDashboard === "function") {
+                showAdminDashboard();
+            }
+        }
+    });
+</script>
     </script>
 </body>
 </html>
