@@ -5,251 +5,259 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bible College of India - Pastors Foundation Course</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-   <style>
-    /* ALL ORIGINAL STYLES PRESERVED */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Georgia', 'Times New Roman', serif; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; padding: 20px; }
-    .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; }
-    .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 40px 30px; text-align: center; border-bottom: 5px solid #ffd700; }
-    .header h1 { font-size: 2.2em; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; }
-    .header p { font-size: 1.2em; opacity: 0.95; font-style: italic; }
-    .logo-section { margin-bottom: 15px; font-size: 3em; }
-    .login-section { padding: 60px 40px; background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%); }
-    .login-box { max-width: 450px; margin: 0 auto; background: white; padding: 45px; border-radius: 12px; border: 3px solid #1e3c72; box-shadow: 0 10px 30px rgba(30, 60, 114, 0.15); }
-    .login-box h2 { color: #1e3c72; margin-bottom: 10px; font-size: 1.8em; text-align: center; }
-    .login-box .subtitle { color: #666; margin-bottom: 30px; text-align: center; font-size: 0.95em; }
-    input[type="email"] { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; margin-bottom: 20px; transition: border-color 0.3s; }
-    button { width: 100%; padding: 16px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1em; font-weight: 600; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.5px; }
-    .error-msg { color: #dc3545; margin-top: 15px; font-weight: 600; text-align: center; padding: 10px; background: #ffe6e6; border-radius: 5px; display: none; }
-    .success-msg { color: #28a745; margin-top: 15px; font-weight: 600; text-align: center; padding: 10px; background: #d4edda; border-radius: 5px; display: none; }
-    .verse-quote { background: #e3f2fd; border-left: 5px solid #2196f3; padding: 20px; margin: 30px 0; border-radius: 5px; font-style: italic; text-align: center; color: #1565c0; font-size: 1.05em; }
-    .info-notice { background: #fff3cd; border-left: 5px solid #ffc107; padding: 20px; border-radius: 8px; margin-top: 30px; color: #856404; }
-    .pdf-selection { display: none; padding: 40px; background: #f8f9fa; }
-    .student-info { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #4caf50; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-    .pdf-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 30px; }
-    .pdf-card { background: white; border-radius: 12px; padding: 35px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 3px solid #e0e0e0; transition: all 0.3s; cursor: pointer; }
-    .pdf-viewer { display: none; padding: 30px; background: #f8f9fa; }
-    .pdf-toolbar { background: #2c3e50; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 10px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
-    .pdf-controls { display: flex; gap: 10px; align-items: center; background: #34495e; padding: 18px; justify-content: center; border-radius: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-    .canvas-wrapper { background: white; padding: 30px; border-radius: 10px; position: relative; overflow: auto; max-height: 85vh; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-    #pdf-canvas { display: block; margin: 0 auto; max-width: 100%; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
-    
-    /* PRINT PROGRESS UI */
-    .print-progress { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 10000; text-align: center; min-width: 400px; }
-    .progress-bar { width: 100%; height: 30px; background: #e0e0e0; border-radius: 15px; overflow: hidden; margin: 20px 0; }
-    .progress-fill { height: 100%; background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; }
-
-    /* --- FIXED PRINT MEDIA QUERIES --- */
-    #print-container { display: none; }
-
-    @media print {
-        @page { size: A4; margin: 0; }
+    <style>
+        /* ALL ORIGINAL STYLES PRESERVED EXACTLY */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Georgia', 'Times New Roman', serif; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 40px 30px; text-align: center; border-bottom: 5px solid #ffd700; }
+        .header h1 { font-size: 2.2em; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; }
+        .header p { font-size: 1.2em; opacity: 0.95; font-style: italic; }
+        .logo-section { margin-bottom: 15px; font-size: 3em; }
+        .login-section { padding: 60px 40px; background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%); }
+        .login-box { max-width: 450px; margin: 0 auto; background: white; padding: 45px; border-radius: 12px; border: 3px solid #1e3c72; box-shadow: 0 10px 30px rgba(30, 60, 114, 0.15); }
+        .login-box h2 { color: #1e3c72; margin-bottom: 10px; font-size: 1.8em; text-align: center; }
+        .login-box .subtitle { color: #666; margin-bottom: 30px; text-align: center; font-size: 0.95em; }
+        input[type="email"] { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; margin-bottom: 20px; transition: border-color 0.3s; }
+        button { width: 100%; padding: 16px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1em; font-weight: 600; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.5px; }
+        .error-msg { color: #dc3545; margin-top: 15px; font-weight: 600; text-align: center; padding: 10px; background: #ffe6e6; border-radius: 5px; display: none; }
+        .success-msg { color: #28a745; margin-top: 15px; font-weight: 600; text-align: center; padding: 10px; background: #d4edda; border-radius: 5px; display: none; }
+        .verse-quote { background: #e3f2fd; border-left: 5px solid #2196f3; padding: 20px; margin: 30px 0; border-radius: 5px; font-style: italic; text-align: center; color: #1565c0; font-size: 1.05em; }
+        .info-notice { background: #fff3cd; border-left: 5px solid #ffc107; padding: 20px; border-radius: 8px; margin-top: 30px; color: #856404; }
+        .pdf-selection { display: none; padding: 40px; background: #f8f9fa; }
+        .student-info { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #4caf50; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .pdf-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 30px; }
+        .pdf-card { background: white; border-radius: 12px; padding: 35px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 3px solid #e0e0e0; transition: all 0.3s; cursor: pointer; }
+        .pdf-viewer { display: none; padding: 30px; background: #f8f9fa; }
+        .pdf-toolbar { background: #2c3e50; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 10px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .pdf-controls { display: flex; gap: 10px; align-items: center; background: #34495e; padding: 18px; justify-content: center; border-radius: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .canvas-wrapper { background: white; padding: 30px; border-radius: 10px; position: relative; overflow: auto; max-height: 85vh; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        #pdf-canvas { display: block; margin: 0 auto; max-width: 100%; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
         
-        /* Instead of visibility:hidden on body, we hide all UI containers */
-        body > *:not(#print-container):not(.print-shield) {
-            display: none !important;
-        }
-        
-        #print-container {
-            display: block !important;
-            visibility: visible !important;
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-        }
-        
-        .print-page {
-            display: block !important;
-            page-break-after: always !important;
-            width: 100% !important;
-        }
+        /* PRINT PROGRESS UI */
+        .print-progress { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 10000; text-align: center; min-width: 400px; }
+        .progress-bar { width: 100%; height: 30px; background: #e0e0e0; border-radius: 15px; overflow: hidden; margin: 20px 0; }
+        .progress-fill { height: 100%; background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; }
 
-        .print-shield {
-            display: block !important;
-            position: fixed !important;
-            top: 0; left: 0; width: 100% !important; height: 100% !important;
-            background: white !important;
-            z-index: 9999 !important;
-            opacity: 0.01 !important;
+        /* --- FIXED PRINT MEDIA QUERIES --- */
+        #print-container { display: none; }
+
+        @media print {
+            @page { size: A4; margin: 0; }
+            
+            /* IMPORTANT: We hide the container only when printing */
+            .container { display: none !important; }
+            
+            #print-container {
+                display: block !important;
+                visibility: visible !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+            }
+            
+            .print-page {
+                display: block !important;
+                page-break-after: always !important;
+                width: 100% !important;
+            }
+
+            .print-shield {
+                display: block !important;
+                position: fixed !important;
+                top: 0; left: 0; width: 100% !important; height: 100% !important;
+                background: white !important;
+                z-index: 9999 !important;
+                opacity: 0.01 !important;
+            }
         }
-    }
-    .print-shield { display: none; }
-</style>
+        .print-shield { display: none; }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <div class="logo-section">📖</div>
             <h1>Bible College of India</h1>
             <p>Pastors Foundation Course Materials</p>
         </div>
 
         <div id="loginSection" class="login-section">
             <div class="login-box">
-                <input type="email" id="studentEmail" placeholder="student@biblecollege.edu">
-                <button onclick="verifyAccess()">Access Course Materials</button>
+                <h2>Welcome Student</h2>
+                <p class="subtitle">Please enter your registered email to access your study materials</p>
+                <input type="email" id="studentEmail" placeholder="Enter your email address">
+                <button onclick="verifyAccess()">Access Materials</button>
+                <div id="errorMsg" class="error-msg"></div>
+                
+                <div class="verse-quote">
+                    "Thy word is a lamp unto my feet, and a light unto my path."<br>
+                    <strong>- Psalm 119:105</strong>
+                </div>
             </div>
         </div>
 
         <div id="pdfSelection" class="pdf-selection">
-            <h2 style="text-align:center; margin-bottom:20px;">📚 Select Study Material</h2>
+            <div class="student-info">
+                <div><strong>Student:</strong> <span id="loggedEmail"></span></div>
+                <button onclick="logout()" style="width: auto; padding: 10px 20px; background: #dc3545;">Logout</button>
+            </div>
             <div class="pdf-cards">
-                <div class="pdf-card"><h3>उत्पत्ती</h3><button onclick="openPDF(1)">View</button></div>
-                <div class="pdf-card"><h3>निर्गम</h3><button onclick="openPDF(2)">View</button></div>
+                <div class="pdf-card" onclick="openPDF(1)"><h3>उत्पत्ती</h3><p>The Beginning</p></div>
+                <div class="pdf-card" onclick="openPDF(2)"><h3>निर्गम</h3><p>10 Commandments</p></div>
+                <div class="pdf-card" onclick="openPDF(3)"><h3>लेवी</h3><p>Rules for Priests</p></div>
+                <div class="pdf-card" onclick="openPDF(4)"><h3>गणना</h3><p>The Journey</p></div>
+                <div class="pdf-card" onclick="openPDF(5)"><h3>अनुवाद</h3><p>Second Law</p></div>
+                <div class="pdf-card" onclick="openPDF(6)"><h3>यहोशवा</h3><p>Capturing Canaan</p></div>
             </div>
         </div>
 
         <div id="pdfViewer" class="pdf-viewer">
-            <button onclick="backToSelection()">⬅️ Back</button>
-            <div id="currentPdfTitle" style="margin:20px 0; font-weight:bold;"></div>
-            <button id="printBtn" onclick="printPDF()" style="margin-bottom:20px; background:#4caf50;">🖨️ Print Securely</button>
-            <div class="canvas-wrapper"><canvas id="pdf-canvas"></canvas></div>
+            <div class="pdf-toolbar">
+                <button onclick="backToSelection()" style="width: auto; background: #7f8c8d;">⬅️ Back to Books</button>
+                <h3 id="currentPdfTitle"></h3>
+                <button id="printBtn" onclick="printPDF()" style="width: auto; background: #27ae60;">🖨️ Print This Chapter</button>
+            </div>
+            <div class="pdf-controls">
+                <button onclick="previousPage()" style="width: auto;">Previous</button>
+                <span style="color: white; margin: 0 15px;">Page <span id="page-num">0</span> of <span id="page-count">0</span></span>
+                <button onclick="nextPage()" style="width: auto;">Next</button>
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
         </div>
     </div>
 
     <div id="print-container"></div>
 
-  <script>
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-    /* ORIGINAL WHITELIST PRESERVED */
-    const ALLOWED_EMAILS = {
-        'rutujabandelu@gmail.com': 'Rutuja bandelu',
-        'jyotilokhande59928@gmail.com': 'Jyoti Lokhande',
-        'harshallokhande6792@gmail.com': 'Harshal Lokhande',
-        'bordesinaya7@gmail.com': 'Sinaya borde',
-        'marshal6792@gmail.com': 'Marshal Lokhande',
-        'varshapagare66@gmail.com': 'Varsha Pagare',
-        'jlibiblecollege@gmail.com': 'Admin Bible College',
-        'nutandaniel7@gmail.com': 'Nutan Daniel'
-    };
+        /* ORIGINAL WHITELIST PRESERVED */
+        const ALLOWED_EMAILS = {
+            'rutujabandelu@gmail.com': 'Rutuja bandelu',
+            'jyotilokhande59928@gmail.com': 'Jyoti Lokhande',
+            'harshallokhande6792@gmail.com': 'Harshal Lokhande',
+            'bordesinaya7@gmail.com': 'Sinaya borde',
+            'marshal6792@gmail.com': 'Marshal Lokhande',
+            'varshapagare66@gmail.com': 'Varsha Pagare',
+            'jlibiblecollege@gmail.com': 'Admin Bible College',
+            'nutandaniel7@gmail.com': 'Nutan Daniel'
+        };
 
-    const PDF_FILE_PATH = {
-        1: { file: 'उत्पत्ती.pdf', title: 'उत्पत्ती : The Beginning' },
-        2: { file: 'निर्गम.pdf', title: 'निर्गम : 10 COMMANDMENTS' },
-        3: { file: 'लेवी.pdf', title: 'लेवी : RULES FOR PRIESTS' },
-        4: { file: 'गणन.pdf', title: 'गणना : THE JOURNEY OF ISREALITIES' },
-        5: { file: 'अनुवाद.pdf', title: 'अनुवाद : SECOND LAW' },
-        6: { file: 'यहोशवा.pdf', title: 'यहोशवा : CAPTURING CANAAN' }
-    };
+        const PDF_FILE_PATH = {
+            1: { file: 'उत्पत्ती.pdf', title: 'उत्पत्ती : The Beginning' },
+            2: { file: 'निर्गम.pdf', title: 'निर्गम : 10 COMMANDMENTS' },
+            3: { file: 'लेवी.pdf', title: 'लेवी : RULES FOR PRIESTS' },
+            4: { file: 'गणन.pdf', title: 'गणना : THE JOURNEY OF ISREALITIES' },
+            5: { file: 'अनुवाद.pdf', title: 'अनुवाद : SECOND LAW' },
+            6: { file: 'यहोशवा.pdf', title: 'यहोशवा : CAPTURING CANAAN' }
+        };
 
-    let pdfDoc = null, pageNum = 1, pageRendering = false, pageNumPending = null, scale = 1.5, studentEmail = '', studentName = '', currentPdfId = null;
-    const canvas = document.getElementById('pdf-canvas'), ctx = canvas.getContext('2d');
+        let pdfDoc = null, pageNum = 1, scale = 1.5, currentPdfId = null;
+        const canvas = document.getElementById('pdf-canvas'), ctx = canvas.getContext('2d');
 
-    /* ORIGINAL FUNCTIONS PRESERVED */
-    function verifyAccess() {
-        const emailInput = document.getElementById('studentEmail');
-        const email = emailInput.value.trim().toLowerCase();
-        if (ALLOWED_EMAILS[email]) {
-            studentEmail = email; studentName = ALLOWED_EMAILS[email];
-            document.getElementById('loggedEmail').textContent = studentName + ' (' + email + ')';
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('pdfSelection').style.display = 'block';
-        } else {
-            document.getElementById('errorMsg').style.display = 'block';
-            document.getElementById('errorMsg').textContent = '❌ Access Denied';
+        function verifyAccess() {
+            const emailInput = document.getElementById('studentEmail');
+            const email = emailInput.value.trim().toLowerCase();
+            if (ALLOWED_EMAILS[email]) {
+                document.getElementById('loggedEmail').textContent = ALLOWED_EMAILS[email];
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('pdfSelection').style.display = 'block';
+            } else {
+                const err = document.getElementById('errorMsg');
+                err.style.display = 'block';
+                err.textContent = '❌ Access Denied: Email not registered';
+            }
         }
-    }
 
-    function openPDF(pdfId) {
-        currentPdfId = pdfId;
-        document.getElementById('currentPdfTitle').textContent = PDF_FILE_PATH[pdfId].title;
-        document.getElementById('pdfSelection').style.display = 'none';
-        document.getElementById('pdfViewer').style.display = 'block';
-        loadPDF(PDF_FILE_PATH[pdfId].file);
-    }
+        function openPDF(id) {
+            currentPdfId = id;
+            document.getElementById('currentPdfTitle').textContent = PDF_FILE_PATH[id].title;
+            document.getElementById('pdfSelection').style.display = 'none';
+            document.getElementById('pdfViewer').style.display = 'block';
+            pdfjsLib.getDocument(PDF_FILE_PATH[id].file).promise.then(pdf => {
+                pdfDoc = pdf;
+                document.getElementById('page-count').textContent = pdf.numPages;
+                pageNum = 1;
+                renderPage(pageNum);
+            });
+        }
 
-    function loadPDF(pdfPath) {
-        pdfjsLib.getDocument(pdfPath).promise.then(function(pdf) {
-            pdfDoc = pdf;
-            document.getElementById('page-count').textContent = pdf.numPages;
-            renderPage(1);
-        });
-    }
-
-    function renderPage(num) {
-        pageRendering = true;
-        pdfDoc.getPage(num).then(function(page) {
-            const viewport = page.getViewport({scale: scale});
-            canvas.height = viewport.height; canvas.width = viewport.width;
-            page.render({canvasContext: ctx, viewport: viewport}).promise.then(() => {
-                pageRendering = false;
+        function renderPage(num) {
+            pdfDoc.getPage(num).then(page => {
+                const viewport = page.getViewport({scale: scale});
+                canvas.height = viewport.height; canvas.width = viewport.width;
+                page.render({canvasContext: ctx, viewport: viewport});
                 document.getElementById('page-num').textContent = num;
             });
-        });
-    }
+        }
 
-    /* NAVIGATION FUNCTIONS */
-    function nextPage() { if (pageNum >= pdfDoc.numPages) return; pageNum++; renderPage(pageNum); }
-    function previousPage() { if (pageNum <= 1) return; pageNum--; renderPage(pageNum); }
-    function backToSelection() { document.getElementById('pdfViewer').style.display = 'none'; document.getElementById('pdfSelection').style.display = 'block'; }
-    function logout() { location.reload(); }
+        function nextPage() { if (pageNum >= pdfDoc.numPages) return; pageNum++; renderPage(pageNum); }
+        function previousPage() { if (pageNum <= 1) return; pageNum--; renderPage(pageNum); }
+        function backToSelection() { document.getElementById('pdfViewer').style.display = 'none'; document.getElementById('pdfSelection').style.display = 'block'; }
+        function logout() { location.reload(); }
 
-    /* --- FIXED PRINT FUNCTION --- */
-    async function printPDF() {
-        const totalPages = pdfDoc.numPages;
-        const printBtn = document.getElementById('printBtn');
-        printBtn.disabled = true;
-        printBtn.textContent = '⏳ Preparing...';
+        async function printPDF() {
+            const totalPages = pdfDoc.numPages;
+            const printBtn = document.getElementById('printBtn');
+            printBtn.disabled = true;
+            printBtn.textContent = '⏳ Preparing...';
 
-        const progressOverlay = document.createElement('div');
-        progressOverlay.className = 'print-progress';
-        progressOverlay.innerHTML = `<h3>🖨️ Preparing Print</h3><div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%">0%</div></div><p id="progressText">Loading page 1 of ${totalPages}</p>`;
-        document.body.appendChild(progressOverlay);
+            const progressOverlay = document.createElement('div');
+            progressOverlay.className = 'print-progress';
+            progressOverlay.innerHTML = `<h3>🖨️ Preparing Print</h3><div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%">0%</div></div><p id="progressText">Loading page 1 of ${totalPages}</p>`;
+            document.body.appendChild(progressOverlay);
 
-        const shield = document.createElement('div');
-        shield.className = 'print-shield';
-        document.body.appendChild(shield);
+            const shield = document.createElement('div');
+            shield.className = 'print-shield';
+            document.body.appendChild(shield);
 
-        const printContainer = document.getElementById('print-container');
-        printContainer.innerHTML = '';
+            const printContainer = document.getElementById('print-container');
+            printContainer.innerHTML = '';
 
-        try {
-            for (let i = 1; i <= totalPages; i++) {
-                const page = await pdfDoc.getPage(i);
-                const viewport = page.getViewport({scale: 2.0});
-                const printCanvas = document.createElement('canvas');
-                printCanvas.width = viewport.width; printCanvas.height = viewport.height;
-                await page.render({canvasContext: printCanvas.getContext('2d'), viewport: viewport}).promise;
-                
-                const img = document.createElement('img');
-                img.src = printCanvas.toDataURL('image/png');
-                img.className = 'print-page';
-                printContainer.appendChild(img);
-                
-                const progress = Math.round((i / totalPages) * 100);
-                document.getElementById('progressFill').style.width = progress + '%';
-                document.getElementById('progressText').textContent = `Loading page ${i} of ${totalPages}`;
-            }
-            
-            document.body.removeChild(progressOverlay);
-            printContainer.style.display = 'block';
-            
-            // 1-second delay ensures images are rendered by the browser
-            setTimeout(() => {
-                window.print();
+            try {
+                for (let i = 1; i <= totalPages; i++) {
+                    const page = await pdfDoc.getPage(i);
+                    const viewport = page.getViewport({scale: 2.0});
+                    const pCanvas = document.createElement('canvas');
+                    pCanvas.width = viewport.width; pCanvas.height = viewport.height;
+                    await page.render({canvasContext: pCanvas.getContext('2d'), viewport: viewport}).promise;
+                    const img = document.createElement('img');
+                    img.src = pCanvas.toDataURL('image/png');
+                    img.className = 'print-page';
+                    printContainer.appendChild(img);
+                    const progress = Math.round((i / totalPages) * 100);
+                    document.getElementById('progressFill').style.width = progress + '%';
+                    document.getElementById('progressText').textContent = `Loading page ${i} of ${totalPages}`;
+                }
+                document.body.removeChild(progressOverlay);
+                printContainer.style.display = 'block';
                 setTimeout(() => {
-                    printContainer.innerHTML = '';
-                    printContainer.style.display = 'none';
-                    if(document.body.contains(shield)) document.body.removeChild(shield);
-                    printBtn.disabled = false;
-                    printBtn.textContent = '🖨️ Print This Chapter';
+                    window.print();
+                    setTimeout(() => {
+                        printContainer.innerHTML = '';
+                        printContainer.style.display = 'none';
+                        if(document.body.contains(shield)) document.body.removeChild(shield);
+                        printBtn.disabled = false;
+                        printBtn.textContent = '🖨️ Print This Chapter';
+                    }, 1000);
                 }, 1000);
-            }, 1000);
-        } catch (error) {
-            document.body.removeChild(progressOverlay);
-            printBtn.disabled = false;
+            } catch (error) {
+                if(document.body.contains(progressOverlay)) document.body.removeChild(progressOverlay);
+                printBtn.disabled = false;
+            }
         }
-    }
 
-    /* ORIGINAL ADMIN BRIDGE PRESERVED */
-    window.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('auth') === 'jlibiblecollege@gmail.com') {
-            document.getElementById('studentEmail').value = 'jlibiblecollege@gmail.com';
-            setTimeout(verifyAccess, 100);
-        }
-    });
-</script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('auth') === 'jlibiblecollege@gmail.com') {
+                document.getElementById('studentEmail').value = 'jlibiblecollege@gmail.com';
+                setTimeout(verifyAccess, 100);
+            }
+        });
+    </script>
 </body>
 </html>
