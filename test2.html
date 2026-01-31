@@ -835,11 +835,11 @@
                 alert('PDF not loaded yet');
                 return;
             }
-            
+
             const pdfConfig = PDF_FILE_PATH[currentPdfId];
             const totalPages = pdfDoc.numPages;
-            
-            if (!confirm(`Print all ${totalPages} pages of "${pdfConfig.title}"?\n\nThis will prepare all pages for printing.`)) {
+
+            if (!confirm('Print all ' + totalPages + ' pages of "' + pdfConfig.title + '"?\n\nThis will send the document to your printer.')) {
                 return;
             }
 
@@ -847,226 +847,127 @@
             printBtn.disabled = true;
             printBtn.textContent = '⏳ Preparing pages...';
 
-            // Create progress overlay
+            // --- progress overlay ---
             const progressOverlay = document.createElement('div');
             progressOverlay.className = 'print-progress';
-            progressOverlay.innerHTML = `
-                <h3>🖨️ Preparing Document for Print</h3>
-                <p>Please wait while all pages are loaded...</p>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
-                </div>
-                <p id="progressText">Loading page 1 of ${totalPages}</p>
-            `;
+            progressOverlay.innerHTML =
+                '<h3>🖨️ Preparing Document for Print</h3>' +
+                '<p>Please wait while all pages are loaded...</p>' +
+                '<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%">0%</div></div>' +
+                '<p id="progressText">Loading page 1 of ' + totalPages + '</p>';
             document.body.appendChild(progressOverlay);
 
-            const printContainer = document.getElementById('print-container');
-            printContainer.innerHTML = '';
+            // --- collect all page images as base64 ---
+            var pageDataURLs = [];
 
             try {
-                // Render all pages to images
-                for (let i = 1; i <= totalPages; i++) {
-                    const page = await pdfDoc.getPage(i);
-                    
-                    // Scale for print quality (2.0 for good quality)
-                    const viewport = page.getViewport({scale: 2.0});
-                    
-                    // Create canvas for this page
-                    const printCanvas = document.createElement('canvas');
+                for (var i = 1; i <= totalPages; i++) {
+                    var page = await pdfDoc.getPage(i);
+                    var viewport = page.getViewport({ scale: 2.0 });
+
+                    var printCanvas = document.createElement('canvas');
                     printCanvas.width = viewport.width;
                     printCanvas.height = viewport.height;
-                    
-                    const printCtx = printCanvas.getContext('2d');
-                    
-                    // Render page to canvas
-                    await page.render({
-                        canvasContext: printCtx,
-                        viewport: viewport
-                    }).promise;
-                    
-                    // Convert canvas to image
-                    const imgData = printCanvas.toDataURL('image/png');
-                    
-                    // Create image element
-                    const img = document.createElement('img');
-                    img.src = imgData;
-                    img.className = 'print-page';
-                    img.alt = `Page ${i}`;
-                    
-                    printContainer.appendChild(img);
-                    
-                    // Update progress
-                    const progress = Math.round((i / totalPages) * 100);
-                    const progressFill = document.getElementById('progressFill');
-                    const progressText = document.getElementById('progressText');
-                    
-                    if (progressFill) {
-                        progressFill.style.width = progress + '%';
-                        progressFill.textContent = progress + '%';
-                    }
-                    if (progressText) {
-                        progressText.textContent = `Loading page ${i} of ${totalPages}`;
-                    }
+                    var printCtx = printCanvas.getContext('2d');
+
+                    await page.render({ canvasContext: printCtx, viewport: viewport }).promise;
+
+                    pageDataURLs.push(printCanvas.toDataURL('image/png'));
+
+                    // update progress
+                    var progress = Math.round((i / totalPages) * 100);
+                    var progressFill = document.getElementById('progressFill');
+                    var progressText = document.getElementById('progressText');
+                    if (progressFill) { progressFill.style.width = progress + '%'; progressFill.textContent = progress + '%'; }
+                    if (progressText) { progressText.textContent = 'Loading page ' + i + ' of ' + totalPages; }
                 }
-                
-                // Remove progress overlay
+
+                // remove progress overlay
                 document.body.removeChild(progressOverlay);
-                
-                // Show print container
-                printContainer.style.display = 'block';
-                
-                // Small delay to ensure images are ready
-                setTimeout(() => {
-                    // ── Open a dedicated print-only popup window ──
-                    // Using features that hide the address bar / toolbar
-                    // so students cannot hit "Save as PDF" from the URL bar.
-                    const printWin = window.open(
-                        '',
-                        '_blank',
-                        'width=850,height=1100,' +
-                        'resizable=yes,scrollbars=yes,' +
-                        'toolbar=no,menubar=no,' +
-                        'location=no,status=no,directories=no'
-                    );
 
-                    if (!printWin) {
-                        // Popup was blocked — fall back to same-window print
-                        window.print();
-                    } else {
-                        // Collect all page images already rendered into print-container
-                        const imgs = printContainer.querySelectorAll('img');
-                        let imgTags = '';
-                        imgs.forEach(function(img) {
-                            imgTags += '<img src="' + img.src + '" style="display:block;width:100%;max-width:100%;page-break-after:always;page-break-inside:avoid;margin:0 auto;" />';
-                        });
+                // --- build the full HTML string for the iframe ---
+                var imgTags = '';
+                for (var j = 0; j < pageDataURLs.length; j++) {
+                    imgTags +=
+                        '<img src="' + pageDataURLs[j] + '" ' +
+                        'style="display:block;width:100%;height:auto;page-break-after:always;page-break-inside:avoid;" />';
+                }
 
-                        // Write a minimal HTML page into the popup — only images, nothing else
-                        printWin.document.write(
-                            '<!DOCTYPE html><html><head><title>Print</title>' +
-                            '<style>' +
-                            '* { margin:0; padding:0; box-sizing:border-box; }' +
-                            'body { background:#fff; }' +
-                            'img { display:block; width:100%; page-break-after:always; page-break-inside:avoid; }' +
-                            'img:last-child { page-break-after:avoid; }' +
-                            '@page { size:A4; margin:0.3cm; }' +
-                            '</style></head><body>' +
-                            '<div class="print-wrap">' + imgTags + '</div>' +
-                            '<script>' +
-                            'window.onload = function() {' +
-                            '  setTimeout(function() {' +
-                            '    window.print();' +
-                            '    window.onafterprint = function() { window.close(); };' +
-                            '  }, 300);' +
-                            '};' +
-                            'document.addEventListener("keydown", function(e) {' +
-                            '  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "p") {' +
-                            '    e.preventDefault();' +
-                            '  }' +
-                            '}, true);' +
-                            '<\/script>' +
-                            '</body></html>'
-                        );
-                        printWin.document.close();
+                var iframeHTML =
+                    '<!DOCTYPE html><html><head><style>' +
+                    '* { margin:0; padding:0; box-sizing:border-box; }' +
+                    'body { background:#fff; }' +
+                    'img { display:block; width:100%; height:auto; }' +
+                    'img:last-child { page-break-after:avoid; }' +
+                    '@page { size:A4; margin:0.4cm; }' +
+                    '</style></head><body>' +
+                    imgTags +
+                    '</body></html>';
+
+                // --- create a hidden iframe, write HTML, then print it ---
+                var iframe = document.createElement('iframe');
+                iframe.id = 'print-iframe';
+                iframe.style.cssText = 'position:absolute;width:0;height:0;border:none;opacity:0;pointer-events:none;';
+                document.body.appendChild(iframe);
+
+                // write content into the iframe
+                iframe.contentDocument.open();
+                iframe.contentDocument.write(iframeHTML);
+                iframe.contentDocument.close();
+
+                // block Ctrl+P / Ctrl+S / right-click INSIDE the iframe too
+                iframe.contentWindow.addEventListener('keydown', function (e) {
+                    if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'p' || e.key.toLowerCase() === 's')) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
                     }
+                }, true);
+                iframe.contentDocument.addEventListener('contextmenu', function (e) {
+                    e.preventDefault();
+                    return false;
+                });
 
-                    // Cleanup the main page's print container
-                    setTimeout(() => {
-                        printContainer.style.display = 'none';
-                        printContainer.innerHTML = '';
-                        printBtn.disabled = false;
-                        printBtn.textContent = '🖨️ Print This Chapter';
-                    }, 800);
-                }, 500);
-                
+                // wait for iframe images to fully load, then print
+                iframe.contentWindow.onload = function () {
+                    setTimeout(function () {
+                        // Print only the iframe — this opens a print dialog scoped to the iframe content only
+                        iframe.contentWindow.print();
+
+                        // destroy iframe after print completes (or is cancelled)
+                        setTimeout(function () {
+                            if (iframe && iframe.parentNode) {
+                                iframe.parentNode.removeChild(iframe);
+                            }
+                            printBtn.disabled = false;
+                            printBtn.textContent = '🖨️ Print This Chapter';
+                        }, 1000);
+                    }, 400);
+                };
+
             } catch (error) {
                 console.error('Print error:', error);
                 alert('Error preparing document for printing. Please try again.');
-                document.body.removeChild(progressOverlay);
+                if (progressOverlay.parentNode) document.body.removeChild(progressOverlay);
                 printBtn.disabled = false;
                 printBtn.textContent = '🖨️ Print This Chapter';
             }
         }
 
-        // ─── BLOCK NATIVE BROWSER PRINT (Ctrl+P / Cmd+P) ───────────
-        document.addEventListener('keydown', function(e) {
-            // Ctrl+P (Windows/Linux) or Cmd+P (Mac)
-            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+     // --- BLOCK ALL BROWSER PRINT / SAVE ROUTES ON MAIN PAGE ---
+        document.addEventListener('keydown', function (e) {
+            // Block Ctrl+P (print) and Ctrl+S (save page) on Windows/Linux and Mac
+            if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'p' || e.key.toLowerCase() === 's')) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
-                showPrintBlockedWarning();
                 return false;
             }
-        }, true); // capture phase so it fires before anything else
+        }, true); // capture phase — fires before anything else
 
-        // Block right-click context menu entirely
-        document.addEventListener('contextmenu', function(e) {
+        // Block right-click context menu on the whole page
+        document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
             return false;
         });
-
-        // Show a friendly warning when someone tries Ctrl+P
-        function showPrintBlockedWarning() {
-            // If a warning already exists, don't stack another
-            if (document.getElementById('print-blocked-warning')) return;
-
-            const warning = document.createElement('div');
-            warning.id = 'print-blocked-warning';
-            warning.style.cssText = [
-                'position:fixed',
-                'top:50%',
-                'left:50%',
-                'transform:translate(-50%,-50%)',
-                'background:#fff',
-                'border-radius:14px',
-                'padding:40px 36px',
-                'max-width:440px',
-                'width:90%',
-                'box-shadow:0 20px 60px rgba(0,0,0,0.35)',
-                'z-index:99999',
-                'text-align:center',
-                'font-family:Georgia,serif'
-            ].join(';');
-
-            warning.innerHTML = `
-                <div style="font-size:3em;margin-bottom:12px;">🚫🖨️</div>
-                <h3 style="color:#1e3c72;font-size:1.4em;margin-bottom:10px;">
-                    Browser Print is Disabled
-                </h3>
-                <p style="color:#555;line-height:1.6;margin-bottom:22px;">
-                    For security reasons, the browser's built-in print shortcut
-                    (Ctrl+P / Cmd+P) is blocked.<br><br>
-                    Please use the <strong style="color:#4caf50;">🖨️ Print This Chapter</strong>
-                    button inside the PDF viewer to print.
-                </p>
-                <button onclick="document.getElementById('print-blocked-warning').remove()"
-                    style="width:auto;padding:11px 32px;background:linear-gradient(135deg,#1e3c72,#2a5298);
-                    color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:1em;font-weight:600;">
-                    OK, Got It
-                </button>
-            `;
-
-            // Also darken the background
-            const backdrop = document.createElement('div');
-            backdrop.id = 'print-blocked-backdrop';
-            backdrop.style.cssText = [
-                'position:fixed','inset:0',
-                'background:rgba(0,0,0,0.45)',
-                'z-index:99998'
-            ].join(';');
-            backdrop.onclick = function() {
-                warning.remove();
-                backdrop.remove();
-            };
-
-            document.body.appendChild(backdrop);
-            document.body.appendChild(warning);
-
-            // Auto-remove after 6 seconds
-            setTimeout(() => {
-                warning.remove();
-                backdrop.remove();
-            }, 6000);
-        }
 
      // --- AUTO-LOGIN BRIDGE FOR ADMIN ---
 window.addEventListener('DOMContentLoaded', () => {
