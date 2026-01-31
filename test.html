@@ -200,7 +200,8 @@
         function backToSelection() { document.getElementById('pdfViewer').style.display = 'none'; document.getElementById('pdfSelection').style.display = 'block'; }
         function logout() { location.reload(); }
 
-      async function printPDF() {
+     let isPrinting = false;
+     async function printPDF() {
     if (!pdfDoc) {
         alert('PDF not loaded yet');
         return;
