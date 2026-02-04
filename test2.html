@@ -388,10 +388,6 @@
         #print-container {
             display: none;
         }
-        
-        #unauthorized-warning {
-            display: none; /* Hidden on screen */
-        }
 
         .print-progress {
             position: fixed;
@@ -433,77 +429,109 @@
             font-weight: 600;
         }
 
-        /* CRITICAL PRINT PROTECTION - Default: Hide everything when printing */
+        /* ===== CRITICAL PRINT PROTECTION - ENHANCED FOR PC ===== */
+        
+        /* Default: Hide warning on screen */
+        #unauthorized-warning {
+            display: none;
+        }
+
+        /* PRINT MODE: By default show ONLY warning (blocks Save as PDF on PC) */
         @media print {
             @page {
                 size: A4;
                 margin: 0.5cm;
             }
             
-            /* BY DEFAULT: Hide all main content during print/save as PDF */
-            .container {
+            /* Step 1: Hide EVERYTHING by default */
+            body, body * {
                 display: none !important;
+                visibility: hidden !important;
             }
             
-            #print-container {
-                display: none !important;
+            /* Step 2: Force show ONLY the warning message */
+            html {
+                display: block !important;
+                visibility: visible !important;
             }
             
-            /* Show unauthorized warning by default */
+            body {
+                display: block !important;
+                visibility: visible !important;
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
             #unauthorized-warning {
                 display: block !important;
                 visibility: visible !important;
-                position: fixed !important;
+                position: absolute !important;
                 top: 0 !important;
                 left: 0 !important;
                 width: 100% !important;
                 height: 100% !important;
                 background: white !important;
-                z-index: 99999 !important;
+                z-index: 999999 !important;
+            }
+            
+            #unauthorized-warning,
+            #unauthorized-warning * {
+                display: block !important;
+                visibility: visible !important;
+            }
+            
+            /* Hide main container and canvas completely */
+            .container,
+            #pdf-canvas,
+            .pdf-viewer,
+            #pdfSelection,
+            #loginSection {
+                display: none !important;
+                visibility: hidden !important;
             }
         }
         
-        /* AUTHORIZED PRINT CLASS - Only applied by official button */
+        /* AUTHORIZED PRINT: Only when button is clicked */
         @media print {
-            /* When authorized: Hide the warning */
-            body.authorized-print #unauthorized-warning {
+            body.authorized-print-mode #unauthorized-warning {
+                display: none !important;
+                visibility: hidden !important;
+            }
+            
+            body.authorized-print-mode,
+            body.authorized-print-mode * {
+                display: revert !important;
+                visibility: revert !important;
+            }
+            
+            body.authorized-print-mode .container {
                 display: none !important;
             }
             
-            /* When authorized: Hide main container */
-            body.authorized-print .container {
-                display: none !important;
-            }
-            
-            /* When authorized: Show only print-container */
-            body.authorized-print #print-container {
-                display: block !important;
-                visibility: visible !important;
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 100% !important;
-            }
-            
-            body.authorized-print #print-container * {
+            body.authorized-print-mode #print-container {
                 display: block !important;
                 visibility: visible !important;
             }
             
-            body.authorized-print .print-page {
+            body.authorized-print-mode #print-container,
+            body.authorized-print-mode #print-container * {
+                display: block !important;
+                visibility: visible !important;
+            }
+            
+            body.authorized-print-mode .print-page {
                 page-break-after: always !important;
                 page-break-inside: avoid !important;
                 display: block !important;
                 width: 100% !important;
-                margin: 0 auto !important;
-                padding: 0 !important;
             }
             
-            body.authorized-print .print-page:last-child {
+            body.authorized-print-mode .print-page:last-child {
                 page-break-after: avoid !important;
             }
 
-            body.authorized-print .print-page img {
+            body.authorized-print-mode .print-page img {
                 max-width: 100% !important;
                 height: auto !important;
                 display: block !important;
@@ -648,18 +676,18 @@
 
     <div id="print-container"></div>
     
-    <!-- UNAUTHORIZED PRINT WARNING - Shows on both PC and Android -->
+    <!-- UNAUTHORIZED WARNING - Shows when Save as PDF is used -->
     <div id="unauthorized-warning">
         <div style="text-align: center; padding: 100px 40px;">
             <h1 style="font-size: 48px; color: #dc3545; margin-bottom: 30px; font-weight: bold;">
-                ⚠️ UNAUTHORIZED PRINT ATTEMPT
+                ⚠️ UNAUTHORIZED SAVE AS PDF ATTEMPT
             </h1>
             <p style="font-size: 24px; color: #333; margin-bottom: 20px; line-height: 1.8;">
                 Please use the official <strong>"Print This Chapter"</strong> button<br>
-                within the application to print materials.
+                within the application to print or save materials.
             </p>
             <p style="font-size: 20px; color: #666; margin-top: 40px; padding: 30px; background: #f8f9fa; border-radius: 10px; border: 3px solid #dc3545;">
-                Direct printing and "Save as PDF" are not permitted.<br><br>
+                Direct "Save as PDF" is not permitted.<br><br>
                 Contact your administrator for assistance.
             </p>
         </div>
@@ -678,7 +706,6 @@
             'varshapagare66@gmail.com': 'Varsha Pagare',
             'jlibiblecollege@gmail.com': 'Admin Bible College',
             'nutandaniel7@gmail.com': 'Nutan Daniel'
-            
         };
 
         // PDF Configuration
@@ -879,9 +906,7 @@
             queueRenderPage(pageNum);
         }
 
-        // --- PRINT PROTECTION SYSTEM ---
-        let isPrintingFromButton = false;
-
+        // --- ENHANCED PRINT PROTECTION FOR PC ---
         async function printPDF() {
             if (!pdfDoc) {
                 alert('PDF not loaded yet');
@@ -894,9 +919,6 @@
             if (!confirm(`Print all ${totalPages} pages of "${pdfConfig.title}"?\n\nThis will prepare all pages for printing.`)) {
                 return;
             }
-
-            // Set the flag to allow printing
-            isPrintingFromButton = true;
 
             const printBtn = document.getElementById('printBtn');
             printBtn.disabled = true;
@@ -923,7 +945,7 @@
                 for (let i = 1; i <= totalPages; i++) {
                     const page = await pdfDoc.getPage(i);
                     
-                    // Scale for print quality (2.0 for good quality)
+                    // Scale for print quality
                     const viewport = page.getViewport({scale: 2.0});
                     
                     // Create canvas for this page
@@ -967,28 +989,22 @@
                 // Remove progress overlay
                 document.body.removeChild(progressOverlay);
                 
-                // Show print container
-                printContainer.style.display = 'block';
+                // CRITICAL: Add authorized class BEFORE printing
+                document.body.classList.add('authorized-print-mode');
                 
-                // ADD AUTHORIZED PRINT CLASS TO BODY - This enables CSS to show content
-                document.body.classList.add('authorized-print');
-                
-                // Small delay to ensure images are ready
+                // Small delay to ensure rendering
                 setTimeout(() => {
                     // Trigger print dialog
                     window.print();
                     
-                    // Cleanup after print dialog closes
+                    // Cleanup after print (extended delay for PC)
                     setTimeout(() => {
-                        // REMOVE AUTHORIZED CLASS - Future prints will be blocked again
-                        document.body.classList.remove('authorized-print');
-                        
-                        printContainer.style.display = 'none';
+                        // Remove authorized class immediately after print
+                        document.body.classList.remove('authorized-print-mode');
                         printContainer.innerHTML = '';
                         printBtn.disabled = false;
                         printBtn.textContent = '🖨️ Print This Chapter';
-                        isPrintingFromButton = false;
-                    }, 1000);
+                    }, 2000);
                 }, 500);
                 
             } catch (error) {
@@ -997,61 +1013,60 @@
                 if (document.body.contains(progressOverlay)) {
                     document.body.removeChild(progressOverlay);
                 }
-                // REMOVE AUTHORIZED CLASS on error
-                document.body.classList.remove('authorized-print');
+                document.body.classList.remove('authorized-print-mode');
                 printBtn.disabled = false;
                 printBtn.textContent = '🖨️ Print This Chapter';
-                isPrintingFromButton = false;
             }
         }
 
-        // --- AUTO-LOGIN BRIDGE FOR ADMIN ---
+        // --- PREVENT CTRL+P BYPASS ---
+        document.addEventListener('keydown', function(event) {
+            if ((event.ctrlKey || event.metaKey) && event.key === 'p') {
+                event.preventDefault();
+                alert('⚠️ Please use the "Print This Chapter" button to print materials.\n\nDirect keyboard shortcuts are disabled.');
+                return false;
+            }
+        });
+
+        // Disable right-click
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+            return false;
+        });
+
+        // --- DETECT PRINT DIALOG (Additional PC Protection) ---
+        window.addEventListener('beforeprint', function() {
+            // If authorized class is NOT set, user is trying to print without button
+            if (!document.body.classList.contains('authorized-print-mode')) {
+                console.log('Unauthorized print attempt detected');
+                // The CSS will show the warning automatically
+            }
+        });
+
+        window.addEventListener('afterprint', function() {
+            // Ensure cleanup happens
+            if (!document.body.classList.contains('authorized-print-mode')) {
+                console.log('Unauthorized print completed - warning was shown');
+            }
+        });
+
+        // --- AUTO-LOGIN FOR ADMIN ---
         window.addEventListener('DOMContentLoaded', () => {
-            // 1. Check if we arrived with an auth token in the URL
             const urlParams = new URLSearchParams(window.location.search);
             const authEmail = urlParams.get('auth');
-            
-            // 2. Check if we have a saved admin session in this browser
             const savedAdminEmail = localStorage.getItem('adminEmail');
             const isAdmin = localStorage.getItem('isAdmin');
 
-            // If either the URL says it's you, or the Browser memory says it's you...
             if (authEmail === 'jlibiblecollege@gmail.com' || (savedAdminEmail === 'jlibiblecollege@gmail.com' && isAdmin === 'true')) {
-                
-                console.log("Admin detected! Bypassing login gate...");
-                
-                // Fill the input and trigger the login function automatically
                 const emailInput = document.getElementById('studentEmail');
                 if (emailInput) {
                     emailInput.value = 'jlibiblecollege@gmail.com';
-                    
-                    // Wait a split second for the rest of the page to be ready, then click login
                     setTimeout(() => {
                         verifyAccess(); 
                     }, 100);
                 }
             }
         });
-
-        // --- PREVENT UNAUTHORIZED PRINTING / SAVE AS PDF ---
-        // CSS handles the protection - no authorized-print class = blank page
-        
-        // Also detect Ctrl+P / Cmd+P keyboard shortcut
-        document.addEventListener('keydown', function(event) {
-            // Detect Ctrl+P (Windows/Linux) or Cmd+P (Mac)
-            if ((event.ctrlKey || event.metaKey) && event.key === 'p') {
-                event.preventDefault();
-                alert('⚠️ Please use the "Print This Chapter" button within the application to print materials.\n\nDirect printing via Ctrl+P is not permitted.');
-                return false;
-            }
-        });
-
-        // Disable right-click context menu to prevent "Print" option
-        document.addEventListener('contextmenu', function(event) {
-            event.preventDefault();
-            return false;
-        });
-
     </script>
 </body>
 </html>
