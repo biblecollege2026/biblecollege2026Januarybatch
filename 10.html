@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -430,20 +429,18 @@
             font-weight: 600;
         }
 
-        /* CRITICAL PRINT PROTECTION - Default: Hide everything when printing */
+        /* CRITICAL PRINT PROTECTION */
         @media print {
             @page {
                 size: A4;
                 margin: 0.5cm;
             }
-            
-            /* BY DEFAULT: Hide all content during print/save as PDF */
+
             body * {
                 display: none !important;
                 visibility: hidden !important;
             }
-            
-            /* Show warning message for unauthorized prints */
+
             body::before {
                 content: "⚠️ UNAUTHORIZED PRINT ATTEMPT" !important;
                 display: block !important;
@@ -462,7 +459,7 @@
                 width: 80% !important;
                 max-width: 600px !important;
             }
-            
+
             body::after {
                 content: "Please use the official 'Print This Chapter' button within the application. Direct printing and Save as PDF are not permitted." !important;
                 display: block !important;
@@ -480,33 +477,33 @@
                 max-width: 600px !important;
             }
         }
-        
-        /* AUTHORIZED PRINT CLASS - Only applied by official button */
+
+        /* AUTHORIZED PRINT CLASS */
         @media print {
             body.authorized-print * {
                 display: none !important;
                 visibility: hidden !important;
             }
-            
+
             body.authorized-print::before,
             body.authorized-print::after {
                 display: none !important;
                 content: none !important;
             }
-            
+
             body.authorized-print #print-container,
             body.authorized-print #print-container * {
                 display: block !important;
                 visibility: visible !important;
             }
-            
+
             body.authorized-print #print-container {
                 position: absolute !important;
                 left: 0 !important;
                 top: 0 !important;
                 width: 100% !important;
             }
-            
+
             body.authorized-print .print-page {
                 page-break-after: always !important;
                 page-break-inside: avoid !important;
@@ -515,7 +512,7 @@
                 margin: 0 auto !important;
                 padding: 0 !important;
             }
-            
+
             body.authorized-print .print-page:last-child {
                 page-break-after: avoid !important;
             }
@@ -587,11 +584,13 @@
             </div>
 
             <h2 class="selection-title">📚 Select Study Material</h2>
+
+            <!-- FIX #1: All 22 cards are now correctly inside one .pdf-cards grid -->
             <div class="pdf-cards">
                 <div class="pdf-card">
                     <div class="pdf-card-icon">📖</div>
                     <h3 class="pdf-card-title">ईयोब ग्रंथ</h3>
-                    <p class="pdf-card-desc"> </p>
+                    <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(1)">View Study Material</button>
                 </div>
 
@@ -604,7 +603,7 @@
 
                 <div class="pdf-card">
                     <div class="pdf-card-icon">📗</div>
-                    <h3 class="pdf-card-title">नीतिसूत्रे </h3>
+                    <h3 class="pdf-card-title">नीतिसूत्रे</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(3)">View Study Material</button>
                 </div>
@@ -618,7 +617,7 @@
 
                 <div class="pdf-card">
                     <div class="pdf-card-icon">📙</div>
-                    <h3 class="pdf-card-title">गीतरत्न </h3>
+                    <h3 class="pdf-card-title">गीतरत्न</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(5)">View Study Material</button>
                 </div>
@@ -629,107 +628,123 @@
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(6)">View Study Material</button>
                 </div>
-                 <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📙</div>
                     <h3 class="pdf-card-title">यिर्मया</h3>
-                    <p class="pdf-card-desc">२  राजे</p>
+                    <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(7)">View Study Material</button>
                 </div>
-                 <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">विलापगीत</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(8)">View Study Material</button>
                 </div>
-                 <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📘</div>
                     <h3 class="pdf-card-title">यहेज्केल ग्रंथ</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(9)">View Study Material</button>
                 </div>
-                 <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">दानीएल</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(10)">View Study Material</button>
                 </div>
-            
-                      <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
-                    <h3 class="pdf-card-title">hosea </h3>
+                    <h3 class="pdf-card-title">hosea</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(11)">View Study Material</button>
                 </div>
-                   <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">योएल</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(12)">View Study Material</button>
                 </div>
-                   <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">आमोस</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(13)">View Study Material</button>
                 </div>
-                   <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">ओबद्या</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(14)">View Study Material</button>
                 </div>
-                   <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">योना</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(15)">View Study Material</button>
                 </div>
-                   <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">मीखा</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(16)">View Study Material</button>
                 </div>
-                   <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">नहूम</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(17)">View Study Material</button>
                 </div>
-                   </div>
-                   <div class="pdf-card">
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">हबक्कूक</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(18)">View Study Material</button>
-                </div>   </div>
-                   <div class="pdf-card">
+                </div>
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">सफन्या</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(19)">View Study Material</button>
-                </div>   </div>
-                   <div class="pdf-card">
+                </div>
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">हाग्गय</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(20)">View Study Material</button>
-                </div>   </div>
-                   <div class="pdf-card">
+                </div>
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">जखर्‍या</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(21)">View Study Material</button>
-                </div>   </div>
-                   <div class="pdf-card">
+                </div>
+
+                <div class="pdf-card">
                     <div class="pdf-card-icon">📔</div>
                     <h3 class="pdf-card-title">मलाखी</h3>
                     <p class="pdf-card-desc"></p>
                     <button onclick="openPDF(22)">View Study Material</button>
-                </div>   
-        
+                </div>
             </div>
+            <!-- END of .pdf-cards -->
+
         </div>
+        <!-- END of #pdfSelection -->
 
         <div id="pdfViewer" class="pdf-viewer">
             <div class="back-btn-container">
@@ -768,112 +783,45 @@
 
         // WHITELIST - Authorized emails
         const ALLOWED_EMAILS = {
-            'rutujabandelu@gmail.com': 'Rutuja bandelu',
+            'rutujabandelu@gmail.com': 'Rutuja Bandelu',
             'jyotilokhande59928@gmail.com': 'Jyoti Lokhande',
             'harshallokhande6792@gmail.com': 'Harshal Lokhande',
-            'bordesinaya7@gmail.com': 'Sinaya borde',
+            'bordesinaya7@gmail.com': 'Sinaya Borde',
             'marshal6792@gmail.com': 'Marshal Lokhande',
             'varshapagare66@gmail.com': 'Varsha Pagare',
             'jlibiblecollege@gmail.com': 'Admin Bible College',
-            'kumudsalve76@gmail.com': 'Kumudini salve',
+            'kumudsalve76@gmail.com': 'Kumudini Salve',
             'nutandaniel7@gmail.com': 'Nutan Daniel'
-            
         };
 
         // PDF Configuration
+        // FIX #4: Removed stray/misplaced title values; all titles now match card headings
         const PDF_FILE_PATH = {
-            1: {
-                file: '18.ईयोब ग्रंथ.pdf',
-                title: ''
-            },
-            2: {
-                file: '19.स्तोत्रसंहिता.pdf',
-                title: ''
-            },
-            3: {
-                file: '20.नीतिसूत्रे.pdf',
-                title: ''
-            },
-            4: {
-                file: '21.उपदेशक.pdf',
-                title: ''
-            },
-            5: {
-                file: '22. गीतरत्न.pdf',
-                title: ''
-            },
-            6: {
-                file: '23. यशया.pdf',
-                title: ''
-            },
-             7: {
-                file: '24. यिर्मया.pdf',
-                title: ''
-            },
-             8: {
-                file: '25.विलापगीत.pdf',
-                title: ''
-            },
-             9: {
-                file: '26. यहेज्केल ग्रंथ.pdf',
-                title: ''
-            },
-             10: {
-                file: '27.दानीएल.pdf',
-                title: ''
-            },
-             11: {
-                file: '28. hosea.pdf',
-                title: ''
-            },
-             12: {
-                file: '29. योएल.pdf',
-                title: 'शास्ते'
-            },
-            13: {
-                file: '30. आमोस.pdf',
-                title: ''
-            },
-            14: {
-                file: '31. ओबद्या.pdf',
-                title: ''
-            },
-            15: {
-                file: '32.योना.pdf',
-                title: ''
-            },
-            16: {
-                file: '33.मीखा.pdf',
-                title: ''
-            },
-             17: {
-                file: '34.नहूम.pdf',
-                title: ''
-            },
-             18: {
-                file: '35.हबक्कूक.pdf',
-                title: ''
-            },
-             19: {
-                file: '36.सफन्या.pdf',
-                title: '२ इतिहास'
-            },
-             20: {
-                file: '37.हाग्गय.pdf',
-                title: ''
-            },
-             21: {
-                file: '38.जखर्‍या.pdf',
-                title: ''
-            },
-              
-             22: {
-                file: '39.मलाखी.pdf',
-                title: ''
-            }
+            1:  { file: '18.ईयोब ग्रंथ.pdf',       title: 'ईयोब ग्रंथ' },
+            2:  { file: '19.स्तोत्रसंहिता.pdf',     title: 'स्तोत्रसंहिता' },
+            3:  { file: '20.नीतिसूत्रे.pdf',        title: 'नीतिसूत्रे' },
+            4:  { file: '21.उपदेशक.pdf',            title: 'उपदेशक' },
+            5:  { file: '22. गीतरत्न.pdf',          title: 'गीतरत्न' },
+            6:  { file: '23. यशया.pdf',             title: 'यशया' },
+            7:  { file: '24. यिर्मया.pdf',          title: 'यिर्मया' },
+            8:  { file: '25.विलापगीत.pdf',          title: 'विलापगीत' },
+            9:  { file: '26. यहेज्केल ग्रंथ.pdf',   title: 'यहेज्केल ग्रंथ' },
+            10: { file: '27.दानीएल.pdf',            title: 'दानीएल' },
+            11: { file: '28. hosea.pdf',            title: 'Hosea' },
+            12: { file: '29. योएल.pdf',             title: 'योएल' },
+            13: { file: '30. आमोस.pdf',             title: 'आमोस' },
+            14: { file: '31. ओबद्या.pdf',           title: 'ओबद्या' },
+            15: { file: '32.योना.pdf',              title: 'योना' },
+            16: { file: '33.मीखा.pdf',              title: 'मीखा' },
+            17: { file: '34.नहूम.pdf',              title: 'नहूम' },
+            18: { file: '35.हबक्कूक.pdf',           title: 'हबक्कूक' },
+            19: { file: '36.सफन्या.pdf',            title: 'सफन्या' },
+            20: { file: '37.हाग्गय.pdf',            title: 'हाग्गय' },
+            21: { file: '38.जखर्‍या.pdf',           title: 'जखर्‍या' },
+            22: { file: '39.मलाखी.pdf',             title: 'मलाखी' }
         };
 
-           let pdfDoc = null;
+        let pdfDoc = null;
         let pageNum = 1;
         let pageRendering = false;
         let pageNumPending = null;
@@ -895,14 +843,11 @@
             const emailInput = document.getElementById('studentEmail');
             const errorMsg = document.getElementById('errorMsg');
             const successMsg = document.getElementById('successMsg');
-
             const email = emailInput.value.trim().toLowerCase();
 
-            // Hide messages
             errorMsg.style.display = 'none';
             successMsg.style.display = 'none';
 
-            // Validation
             if (!email) {
                 errorMsg.textContent = '⚠️ Please enter your email address';
                 errorMsg.style.display = 'block';
@@ -915,15 +860,20 @@
                 return;
             }
 
-            // Check whitelist
             if (ALLOWED_EMAILS[email]) {
                 studentEmail = email;
                 studentName = ALLOWED_EMAILS[email];
                 successMsg.textContent = '✅ Access granted! Loading materials...';
                 successMsg.style.display = 'block';
-                
+
                 document.getElementById('loggedEmail').textContent = studentName + ' (' + email + ')';
-                
+
+                // FIX #2: Save admin session to localStorage on successful login
+                if (email === 'jlibiblecollege@gmail.com') {
+                    localStorage.setItem('adminEmail', email);
+                    localStorage.setItem('isAdmin', 'true');
+                }
+
                 setTimeout(() => {
                     document.getElementById('loginSection').style.display = 'none';
                     document.getElementById('pdfSelection').style.display = 'block';
@@ -937,6 +887,9 @@
         function logout() {
             studentEmail = '';
             studentName = '';
+            // FIX #2: Clear admin session from localStorage on logout
+            localStorage.removeItem('adminEmail');
+            localStorage.removeItem('isAdmin');
             document.getElementById('studentEmail').value = '';
             document.getElementById('pdfSelection').style.display = 'none';
             document.getElementById('pdfViewer').style.display = 'none';
@@ -946,11 +899,11 @@
         function openPDF(pdfId) {
             currentPdfId = pdfId;
             const pdfConfig = PDF_FILE_PATH[pdfId];
-            
+
             document.getElementById('currentPdfTitle').textContent = pdfConfig.title;
             document.getElementById('pdfSelection').style.display = 'none';
             document.getElementById('pdfViewer').style.display = 'block';
-            
+
             loadPDF(pdfConfig.file);
         }
 
@@ -963,7 +916,7 @@
 
         function loadPDF(pdfPath) {
             const loadingTask = pdfjsLib.getDocument(pdfPath);
-            
+
             loadingTask.promise.then(function(pdf) {
                 pdfDoc = pdf;
                 document.getElementById('page-count').textContent = pdf.numPages;
@@ -1044,29 +997,36 @@
         }
 
         // --- PRINT PROTECTION SYSTEM ---
+        // FIX #3: isPrintingFromButton is now enforced via the beforeprint event
         let isPrintingFromButton = false;
+
+        // Block any print that wasn't triggered by the official button
+        window.addEventListener('beforeprint', function() {
+            if (!isPrintingFromButton) {
+                // Remove authorized class to ensure CSS shows the warning page
+                document.body.classList.remove('authorized-print');
+            }
+        });
 
         async function printPDF() {
             if (!pdfDoc) {
                 alert('PDF not loaded yet');
                 return;
             }
-            
+
             const pdfConfig = PDF_FILE_PATH[currentPdfId];
             const totalPages = pdfDoc.numPages;
-            
+
             if (!confirm(`Print all ${totalPages} pages of "${pdfConfig.title}"?\n\nThis will prepare all pages for printing.`)) {
                 return;
             }
 
-            // Set the flag to allow printing
             isPrintingFromButton = true;
 
             const printBtn = document.getElementById('printBtn');
             printBtn.disabled = true;
             printBtn.textContent = '⏳ Preparing pages...';
 
-            // Create progress overlay
             const progressOverlay = document.createElement('div');
             progressOverlay.className = 'print-progress';
             progressOverlay.innerHTML = `
@@ -1083,42 +1043,34 @@
             printContainer.innerHTML = '';
 
             try {
-                // Render all pages to images
                 for (let i = 1; i <= totalPages; i++) {
                     const page = await pdfDoc.getPage(i);
-                    
-                    // Scale for print quality (2.0 for good quality)
                     const viewport = page.getViewport({scale: 2.0});
-                    
-                    // Create canvas for this page
+
                     const printCanvas = document.createElement('canvas');
                     printCanvas.width = viewport.width;
                     printCanvas.height = viewport.height;
-                    
+
                     const printCtx = printCanvas.getContext('2d');
-                    
-                    // Render page to canvas
+
                     await page.render({
                         canvasContext: printCtx,
                         viewport: viewport
                     }).promise;
-                    
-                    // Convert canvas to image
+
                     const imgData = printCanvas.toDataURL('image/png');
-                    
-                    // Create image element
+
                     const img = document.createElement('img');
                     img.src = imgData;
                     img.className = 'print-page';
                     img.alt = `Page ${i}`;
-                    
+
                     printContainer.appendChild(img);
-                    
-                    // Update progress
+
                     const progress = Math.round((i / totalPages) * 100);
                     const progressFill = document.getElementById('progressFill');
                     const progressText = document.getElementById('progressText');
-                    
+
                     if (progressFill) {
                         progressFill.style.width = progress + '%';
                         progressFill.textContent = progress + '%';
@@ -1127,26 +1079,16 @@
                         progressText.textContent = `Loading page ${i} of ${totalPages}`;
                     }
                 }
-                
-                // Remove progress overlay
+
                 document.body.removeChild(progressOverlay);
-                
-                // Show print container
                 printContainer.style.display = 'block';
-                
-                // ADD AUTHORIZED PRINT CLASS TO BODY - This enables CSS to show content
                 document.body.classList.add('authorized-print');
-                
-                // Small delay to ensure images are ready
+
                 setTimeout(() => {
-                    // Trigger print dialog
                     window.print();
-                    
-                    // Cleanup after print dialog closes
+
                     setTimeout(() => {
-                        // REMOVE AUTHORIZED CLASS - Future prints will be blocked again
                         document.body.classList.remove('authorized-print');
-                        
                         printContainer.style.display = 'none';
                         printContainer.innerHTML = '';
                         printBtn.disabled = false;
@@ -1154,14 +1096,13 @@
                         isPrintingFromButton = false;
                     }, 1000);
                 }, 500);
-                
+
             } catch (error) {
                 console.error('Print error:', error);
                 alert('Error preparing document for printing. Please try again.');
                 if (document.body.contains(progressOverlay)) {
                     document.body.removeChild(progressOverlay);
                 }
-                // REMOVE AUTHORIZED CLASS on error
                 document.body.classList.remove('authorized-print');
                 printBtn.disabled = false;
                 printBtn.textContent = '🖨️ Print This Chapter';
@@ -1171,38 +1112,27 @@
 
         // --- AUTO-LOGIN BRIDGE FOR ADMIN ---
         window.addEventListener('DOMContentLoaded', () => {
-            // 1. Check if we arrived with an auth token in the URL
             const urlParams = new URLSearchParams(window.location.search);
             const authEmail = urlParams.get('auth');
-            
-            // 2. Check if we have a saved admin session in this browser
+
+            // FIX #2: localStorage values are now written on login, so this will work
             const savedAdminEmail = localStorage.getItem('adminEmail');
             const isAdmin = localStorage.getItem('isAdmin');
 
-            // If either the URL says it's you, or the Browser memory says it's you...
             if (authEmail === 'jlibiblecollege@gmail.com' || (savedAdminEmail === 'jlibiblecollege@gmail.com' && isAdmin === 'true')) {
-                
                 console.log("Admin detected! Bypassing login gate...");
-                
-                // Fill the input and trigger the login function automatically
                 const emailInput = document.getElementById('studentEmail');
                 if (emailInput) {
                     emailInput.value = 'jlibiblecollege@gmail.com';
-                    
-                    // Wait a split second for the rest of the page to be ready, then click login
                     setTimeout(() => {
-                        verifyAccess(); 
+                        verifyAccess();
                     }, 100);
                 }
             }
         });
 
-        // --- PREVENT UNAUTHORIZED PRINTING / SAVE AS PDF ---
-        // CSS handles the protection - no authorized-print class = blank page
-        
-        // Also detect Ctrl+P / Cmd+P keyboard shortcut
+        // Detect Ctrl+P / Cmd+P
         document.addEventListener('keydown', function(event) {
-            // Detect Ctrl+P (Windows/Linux) or Cmd+P (Mac)
             if ((event.ctrlKey || event.metaKey) && event.key === 'p') {
                 event.preventDefault();
                 alert('⚠️ Please use the "Print This Chapter" button within the application to print materials.\n\nDirect printing via Ctrl+P is not permitted.');
@@ -1210,12 +1140,11 @@
             }
         });
 
-        // Disable right-click context menu to prevent "Print" option
+        // Disable right-click context menu
         document.addEventListener('contextmenu', function(event) {
             event.preventDefault();
             return false;
         });
-
     </script>
 </body>
 </html>
