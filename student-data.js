@@ -74,7 +74,7 @@ const STUDENT_DATA = {
   reference1: 'Akash Mhaske - +918796726320',
   reference2: 'Nikita Hiwale - +917745811984',
   futurePlan: 'Kown the plan of God in my life. Have a daily relationship with Jesus, walk with him everyday'
-}
+},
 
 'rutujabandelu@gmail.com': {
   name: 'Rutuja Nitin Bandelu',
