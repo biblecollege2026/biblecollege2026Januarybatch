@@ -873,12 +873,16 @@
 
         // WHITELIST - Authorized emails
         const ALLOWED_EMAILS = {
-            'hiwalefrancis@gmail.com': 'Hiwale Francis',
-            'varshabhore55@gmail.com': 'varsha bhore', 
-            'jadhavsushma05@gmail.com':  'sushma jadhav',
-            'shwetadalge14@gmail.com':    'shweta dalge',
-//            'sagarware12@gmail.com':     'sagar ware',    
-             'jlibiblecollege@gmail.com':     'admin',
+            'rutujabandelu@gmail.com': 'Rutuja Bandelu',
+            'jyotilokhande59928@gmail.com': 'Jyoti Lokhande',
+            'harshallokhande6792@gmail.com': 'Harshal Lokhande',
+            'bordesinaya7@gmail.com': 'Sinaya Borde',
+            'marshal6792@gmail.com': 'Marshal Lokhande',
+            'varshapagare66@gmail.com': 'Varsha Pagare',
+            'jlibiblecollege@gmail.com': 'Admin Bible College',
+            'kumudsalve76@gmail.com': 'Kumudini Salve',
+            'nutandaniel7@gmail.com': 'Nutan Daniel'
+            'meghadhusia09june@gmail.com': 'Megha Dhusia',
 
         };
 
