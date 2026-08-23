@@ -14,6 +14,7 @@ const STUDENT_DATA = {
         'kumudsalve76@gmail.com': { name: 'Kumudini Salve', marks: [98, 95, 94, 100, 82, 98, 100], offlineMark: 66.5 },
         'nutandaniel7@gmail.com': { name: 'Nutan Daniel', marks: [72.5, 79, null, null, 97, null, 100], offlineMark: 45.00  },
         'meghadhusia09june@gmail.com': { name: 'Megha dhusia', marks:     [null, 48, 100, 40, null, null, null], offlineMark: 49.5 },
+        'panchaldurga80@gmail.com': { name: ' Durga bhalerao', marks:    [65.5, 59, 60, null, 60, 69, 49], offlineMark: null },
         'jlibiblecollege@gmail.com': { name: 'Bible College Admin', marks: [], offlineMark: 0 },
         
         
@@ -186,5 +187,5 @@ const STUDENT_DATA = {
     },
 
     // Exam months mapping (updated to include offline)
-    examMonths: ['SEPTEMBER EXAM 2025', 'OCTOBER EXAM 2025', 'NOVEMBER EXAM 2025', 'DECEMBER EXAM 2025', 'JANUARY EXAM 2026', 'FEBRUARY EXAM 1 ', 'FEBRUARY EXAM 2', 'OFFLINE EXAM MARCH 2026']
+    examMonths: ['FEBRUARY EXAM 1 2026', 'FEBRUARY EXAM 2 2026', 'MARCH EXAM 2026', 'APRIL EXAM 2026', 'MAY EXAM 2026', 'JUNE EXAM 1 ', 'JUNE EXAM 2', 'OFFLINE EXAM JULY  2026']
 };
