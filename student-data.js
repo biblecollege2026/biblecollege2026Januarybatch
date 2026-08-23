@@ -58,6 +58,23 @@ const STUDENT_DATA = {
   reference2: 'Harshal Lokhande - 9158861312',
   futurePlan: 'Preaching the Gospel, Healing the sick, Serving God and Serving People, Taking Gospel to every city, state and nation.'
 },
+  'meghadhusia09june@gmail.com': {
+  name: 'Megha Shantilal Dhusia',
+  address: 'A7 Ganesh puram opp VWC pune dapodi 12',
+  mobile: '09028091883',
+  mobile2: 'Not Specified',
+  dob: 'Not Specified',
+  age: 35,
+  gender: 'Female',
+  education: 'Not Specified',
+  occupation: 'Not Specified',
+  marital: 'Not Specified',
+  church: 'Emanuel AG Curch',
+  pastor: 'Not Specified',
+  reference1: 'Akash Mhaske - +918796726320',
+  reference2: 'Nikita Hiwale - +917745811984',
+  futurePlan: 'Kown the plan of God in my life. Have a daily relationship with Jesus, walk with him everyday'
+}
 
 'rutujabandelu@gmail.com': {
   name: 'Rutuja Nitin Bandelu',
